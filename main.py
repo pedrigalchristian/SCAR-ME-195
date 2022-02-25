@@ -1,68 +1,35 @@
-# Shows user that running boot.py
-import blink
-from umqttsimple import MQTTClient
-import connect_to_wifi
-from connect_to_wifi import (client_id, mqtt_server, topic_sub,
-                             last_message, message_interval, counter)
+"""
+This progam is not the final version of the main program
+for the ESP; refer to final_main.py. This program is the 
+first program that the MCU would run.
+"""
+
+from machine import Pin
 import time
-import tool_v2
-
-# Test if main program is reacting
-blink.led.off()
-time.sleep(3)
-blink.led.on()
-print("Off!")
+import flash_led
+import stepper_motor
 
 
-"""Callback function: After 1 function is done, immediately another function is triggered to begin."""
-def sub_cb(topic, msg):
-    # Stands for "subscribed callback"
-    print((topic, msg))
-
-    """Insert any function that you want from Christian's RPi"""
-    if int(msg) <= 0:
-        print("Negative!")
-    else:
-        print("Positive!")
-    """
-    if int(msg) <= 0: steclose()
-    """
-    tool_v2.angle(tool_v2.servo, msg)
+# Global Constants
+DELAY = 1
+PIN_RST = 10
 
 
-def connect_and_subscribe():
-    print("Connecting to MQTT Broker...")
-    global client_id, mqtt_server, topic_sub
-    client = MQTTClient(client_id, mqtt_server, port = 1883)
-    client.set_callback(sub_cb)
-    client.connect()
-    client.subscribe(topic_sub)
-    print('Connected to %s MQTT broker, subscribed to %s topic' % (mqtt_server, topic_sub))
-    return client
+# Initializations
+pinRST = Pin(PIN_RST, Pin.IN) # This is synthetic for us telling to autohome
+print("Running main program.")
 
-def restart_and_reconnect():
-    print('Failed to connect to MQTT broker. Reconnecting...')
-    time.sleep(10)
-    machine.reset()
+# User-defined Functions
+def iterate() -> None:
+    """This is synthetic code for the motor actuating."""
+    stepper_motor.origin += 1
 
-try:
-    client = connect_and_subscribe()
-except OSError as e:
-    restart_and_reconnect()
+# Interrupts
+pinRST.irq(trigger = PIN.IRQ_RISING, handler = stepper_motor.autohome)
 
+# Main Program
 while True:
-    try:
-        client.check_msg()
-        if (time.time() - last_message) > message_interval:
-            print("testing..", __name__, counter)
-            last_message = time.time()
-            counter += 1
-    except OSError as e:
-        restart_and_reconnect()
-
-
-
-
-
-
+        iterate()
+        print(stepper_motor.origin)
+        time.sleep(DELAY)
 
