@@ -12,28 +12,20 @@ from connect_to_wifi import (client_id, mqtt_server, topic_sub,
                              last_message, message_interval, counter)
 import time
 import stepper_motor
-
-# Test if main program is reacting
-blink.led.off()
-time.sleep(3)
-blink.led.on()
-print("Off!")
+import flash_led
 
 
 """Callback function: After 1 function is done, immediately another function is triggered to begin."""
 def sub_cb(topic, msg):
     # Stands for "subscribed callback"
     print((topic, msg))
+    
+    (angle, direction) = tuple(map(int, msg.split(', ')))
 
-    """Insert any function that you want from Christian's RPi"""
-    if int(msg) <= 0:
-        print("Negative!")
-    else:
-        print("Positive!")
-    """
-    if int(msg) <= 0: steclose()
-    """
-    tool_v2.angle(tool_v2.servo, msg)
+    stepper_motor._rotate(angle, direction)
+    
+    print(stepper_motor.origin)
+
 
 
 def connect_and_subscribe():
@@ -56,6 +48,7 @@ try:
 except OSError as e:
     restart_and_reconnect()
 
+# Main Program
 while True:
     try:
         client.check_msg()

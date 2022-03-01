@@ -10,6 +10,7 @@
     Date: 02/24/2022
     Comments:
 """
+from sklearn.metrics import jaccard_score
 from machine import Pin
 import time
 
@@ -37,7 +38,7 @@ num_phases = len(PHASES)
 origin = 0
 
 # User Defined Functions
-def rotate(i, j):   #i = steps of 1.8 deg, j = 1 --> cw, j = -1 --> ccw
+def rotate(i: int, j: int) -> None:   #i = steps of 1.8 deg, j = 1 --> cw, j = -1 --> ccw
     global PHASES, pins_motor, num_phases, phase_num, delay, origin
     old_time = time.time_ns()
     counter = 0
@@ -55,17 +56,28 @@ def rotate(i, j):   #i = steps of 1.8 deg, j = 1 --> cw, j = -1 --> ccw
 
 
 def reset_origin(pin: Pin) -> None:
-    global origin
-    origin = 0
+        global origin
+        origin = 0
 
-def autohome(pin: Pin) -> None:
+def autohome() -> None:
     global origin
     while origin > 0:
-        # rotate(1, -1)
+        rotate(1, -1)
         origin -= 1
-        print(origin)
-        time.sleep(delay)
-    
+
+# Synthetic Code
+def _autohome(pin: Pin) -> None:
+        global origin
+        while origin > 0:
+            # rotate(1, -1)
+            origin -= 1
+            print(origin)
+            time.sleep(delay)
+        
+def _rotate(i, j):
+    global origin
+    origin += i*j*1.8 # Update origin in degrees
+
 
 # Interrupts
 PinLS.irq(trigger = Pin.IRQ_RISING, handler = reset_origin)
