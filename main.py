@@ -11,6 +11,7 @@ from connect_to_wifi import (client_id, mqtt_server, topic_sub,
                              last_message, message_interval, counter)
 import time
 import stepper_motor
+from stepper_motor import PinLS
 import flash_led
 
 # Global Constants
@@ -31,8 +32,6 @@ def sub_cb(topic, msg):
     print("Origin of MCU_{}: ".format(MCU_NUM), stepper_motor.origin)
 
 
-
-
 def connect_and_subscribe():
     print("Connecting to MQTT Broker...")
     global client_id, mqtt_server, topic_sub
@@ -48,6 +47,8 @@ def restart_and_reconnect():
     time.sleep(10)
     machine.reset()
 
+last_origin = stepper_motor.origin
+
 try:
     client = connect_and_subscribe()
 except OSError as e:
@@ -58,7 +59,10 @@ while True:
     try:
         client.check_msg()
         if (time.time() - last_message) > message_interval:
-            print("testing..", __name__, counter)
+            #print("testing..", __name__, counter)
+            if stepper_motor.origin != last_origin:
+                print("Origin of MCU_{}: ".format(MCU_NUM), stepper_motor.origin)
+                last_origin = stepper_motor.origin
             last_message = time.time()
             counter += 1
     except OSError as e:

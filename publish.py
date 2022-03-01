@@ -30,7 +30,7 @@ def post(angle: int, direction: int):
 
 def decrease_angle():
     global SCALE
-    post(-1*SCALE, -1)
+    post(1*SCALE, -1)
     
 system
 def increase_angle():
