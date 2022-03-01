@@ -10,7 +10,7 @@
     Date: 02/24/2022
     Comments:
 """
-from sklearn.metrics import jaccard_score
+#from sklearn.metrics import jaccard_score
 from machine import Pin
 import time
 

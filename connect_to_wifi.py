@@ -22,7 +22,7 @@ print(__name__, "working...")
 MCU_NUM = 1
 
 client_id = ubinascii.hexlify(machine.unique_id())
-topic_sub = mcu_sub[MCU_NUM].encode()
+topic_sub = mcu_sub[MCU_NUM - 1].encode()
 last_message = 0
 message_interval = 5
 counter = 0
