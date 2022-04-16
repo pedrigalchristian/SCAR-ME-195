@@ -16,6 +16,7 @@ def run():
         print(led.value())
         sleep(1)
 
+
 if __name__ == "__main__":
     while True:
         run()

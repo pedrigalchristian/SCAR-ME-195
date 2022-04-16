@@ -6,6 +6,8 @@ first program that the MCU would run.
 
 from machine import Pin
 import time
+
+import blink
 import flash_led
 import stepper_motor
 
@@ -16,20 +18,21 @@ PIN_RST = 10
 
 
 # Initializations
-pinRST = Pin(PIN_RST, Pin.IN) # This is synthetic for us telling to autohome
+#pinRST = Pin(PIN_RST, Pin.IN) # This is synthetic for us telling to autohome
 print("Running main program.")
 
 # User-defined Functions
-def iterate() -> None:
-    """This is synthetic code for the motor actuating."""
-    stepper_motor.origin += 1
+#def iterate() -> None:
+#    """This is synthetic code for the motor actuating."""
+#    stepper_motor.origin += 1
 
 # Interrupts
-pinRST.irq(trigger = PIN.IRQ_RISING, handler = stepper_motor.autohome)
+#pinRST.irq(trigger = PIN.IRQ_RISING, handler = stepper_motor.autohome)
 
 # Main Program
-while True:
-        iterate()
-        print(stepper_motor.origin)
-        time.sleep(DELAY)
+if __name__ == "__main__":
+    while True:
+        stepper_motor.rotate(20, 1)
+        time.sleep(1)
+
 

@@ -1,19 +1,22 @@
 import time
 from machine import Pin, PWM, I2C
-from ina219 import INA219
-from logging import INFO
+#from ina219 import INA219
+#from logging import INFO
+import flash_led
 
 angle = 80
 servo = PWM(Pin(12), freq = 50, duty = angle)
 
 LSW = Pin(2, Pin.IN)
 
-SHUNT_OHMS = 0.1
-i2c = I2C(Pin(5), Pin(4))
-ina = INA219(SHUNT_OHMS, i2c, log_level=INFO)
-ina.configure()
+#SHUNT_OHMS = 0.1
+#i2c = I2C(Pin(5), Pin(4))
+#ina = INA219(SHUNT_OHMS, i2c, log_level=INFO)
+#ina.configure()
 
 def close():
+    servo.duty(0)
+"""
     global angle
     while True:
         time.sleep(0.01)
@@ -23,7 +26,7 @@ def close():
             servo.duty(angle)
         else:
             return False
-
+"""
 def open():
     global angle
     while True:
@@ -36,3 +39,9 @@ def open():
             return False
         else:
             print('error')
+            
+if __name__ == "__main__":
+    while True:
+        open()
+        time.sleep(1)
+        close()

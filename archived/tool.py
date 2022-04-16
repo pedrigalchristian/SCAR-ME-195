@@ -1,9 +1,10 @@
 from machine import Pin, PWM
-from time import sleep
-import hcsr04
+import time
+#import hcsr04
+import flash_led
 
-# Init Hardware
-sensor = hcsr04.HCSR04(12,14) # GPIO Pins 12 and 14 for Ultrasonic Sensor
+## Init Hardware
+#sensor = hcsr04.HCSR04(12,14) # GPIO Pins 12 and 14 for Ultrasonic Sensor
 servo = PWM(Pin(4), freq = 50, duty = 51) # Initialize at Pin 4 at 50 Hz and 0 degrees
 
 
@@ -11,13 +12,16 @@ servo = PWM(Pin(4), freq = 50, duty = 51) # Initialize at Pin 4 at 50 Hz and 0 d
 def close(servo):
     # Closes servo motor by turning to 180 degrees
     servo.duty(102) # 180 degrees
-    sleep(1)
+    time.sleep(1)
 
 def open(servo):
     # Opens servo motor by turning to 0 degrees
-    servo.duty(51) # 0 degrees
-    sleep(1)
+    x = int(input("What duty?: "))
+    servo.duty(x)
+    time.sleep(1)
 
+#20 to 67
+"""
 def main():
     # Measures distance from ultrasonic sensor
     distance = sensor.distance_cm()
@@ -31,6 +35,10 @@ def main():
         print("Closing Tool since below", min_distance, "cm!")
 
     else: open(servo) 
+"""
+
+def main():
+    open(servo)
 
 # Params
 min_distance = 10
@@ -38,4 +46,4 @@ min_distance = 10
 # Main Loop
 while True:
   main()
-end
+
