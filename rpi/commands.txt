@@ -1,0 +1,4 @@
+
+# Run this on terminal
+# cd to convert-model and then run ``source bin/activate``
+python detect.py --weights ./checkpoints/anpr-416.tflite --size 416 --model yolov4 --image images\scissors.jpg --framework tflite	
