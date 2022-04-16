@@ -7,9 +7,9 @@ first program that the MCU would run.
 from machine import Pin
 import time
 
-import blink
-import flash_led
-import stepper_motor
+import test.blink as blink
+import src.flash_led as flash_led
+import test.stepper_motors.stepper_motor as stepper_motor
 
 
 # Global Constants

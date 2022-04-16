@@ -1,5 +1,5 @@
 from machine import Pin
-import flash_led
+import src.flash_led as flash_led
 
 btn = Pin(9, Pin.IN, Pin.PULL_UP)
 

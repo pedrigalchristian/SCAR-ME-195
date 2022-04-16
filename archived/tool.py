@@ -1,7 +1,7 @@
 from machine import Pin, PWM
 import time
 #import hcsr04
-import flash_led
+import src.flash_led as flash_led
 
 ## Init Hardware
 #sensor = hcsr04.HCSR04(12,14) # GPIO Pins 12 and 14 for Ultrasonic Sensor

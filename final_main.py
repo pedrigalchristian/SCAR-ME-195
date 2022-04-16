@@ -5,14 +5,14 @@ main.py
 """
 
 # Shows user that running boot.py
-import blink
+import test.blink as blink
 from umqttsimple import MQTTClient
-import connect_to_wifi
-from connect_to_wifi import (client_id, mqtt_server, topic_sub,
+import src.connect_to_wifi as connect_to_wifi
+from src.connect_to_wifi import (client_id, mqtt_server, topic_sub,
                              last_message, message_interval, counter)
 import time
-import stepper_motor
-import flash_led
+import test.stepper_motors.stepper_motor as stepper_motor
+import src.flash_led as flash_led
 
 
 """Callback function: After 1 function is done, immediately another function is triggered to begin."""

@@ -2,7 +2,7 @@ from os import system
 from time import sleep
 
 import keyboard
-from passwords import mcu_sub
+from src.passwords import mcu_sub
 
 # Global Constants
 SCALE = 10

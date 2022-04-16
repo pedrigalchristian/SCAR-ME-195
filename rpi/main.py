@@ -6,13 +6,13 @@ main.py
 
 # Shows user that running boot.py
 from umqttsimple import MQTTClient
-import connect_to_wifi
-from connect_to_wifi import (client_id, mqtt_server, topic_sub,
+import src.connect_to_wifi as connect_to_wifi
+from src.connect_to_wifi import (client_id, mqtt_server, topic_sub,
                              last_message, message_interval, counter)
 import time
-import stepper_motor
-from stepper_motor import PinLS
-import flash_led
+import test.stepper_motors.stepper_motor as stepper_motor
+from test.stepper_motors.stepper_motor import PinLS
+import src.flash_led as flash_led
 
 # Global Constants
 MCU_NUM = 1

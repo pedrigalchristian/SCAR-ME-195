@@ -2,7 +2,7 @@ import time
 from machine import Pin, PWM, I2C
 #from ina219 import INA219
 #from logging import INFO
-import flash_led
+import src.flash_led as flash_led
 
 angle = 80
 servo = PWM(Pin(12), freq = 50, duty = angle)

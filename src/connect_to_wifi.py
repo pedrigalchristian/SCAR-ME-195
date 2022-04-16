@@ -13,8 +13,8 @@ import gc
 gc.collect()
 
 # User-Defined Libraries
-from passwords import ssid, password, mqtt_server, mcu_sub
-import flash_led
+from src.passwords import ssid, password, mqtt_server, mcu_sub
+import src.flash_led as flash_led
 
 print(__name__, "working...")
 
